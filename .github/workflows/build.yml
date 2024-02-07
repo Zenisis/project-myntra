@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   build-analyze-scan:
-    name: my
+    name: Build
     runs-on: [self-hosted]
     steps:
       - name: Checkout code
