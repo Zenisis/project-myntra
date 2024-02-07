@@ -40,4 +40,6 @@ jobs:
           /home/ubuntu/bin/docker-scout cves kartik2311/myntra:latest
   deploy:
     needs: build-analyze-scan
-    runs-on: self-hosted # Use your self-hosted runner label here
+    runs-on:[self-hosted] # Use your self-hosted runner label here - name: Run the container
+     - name: Run the container
+     run: docker run -d --name myntra -p 3000:3000 kartik2311/myntra:latest
