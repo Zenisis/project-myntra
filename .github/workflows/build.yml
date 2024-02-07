@@ -6,7 +6,7 @@ on:
 jobs:
   build-analyze-scan:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,3 +19,22 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: NPM Install
         run: npm install # Add your specific npm install command
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+      - name: Docker Scout Scan
+        run: |
+          /home/ubuntu/bin/docker-scout quickview fs://.
+          /home/ubuntu/bin/docker-scout cves fs://.
+      - name: Docker build and push
+        run: |
+          # Run commands to build and push Docker images
+          docker build -t myntra .
+          docker tag myntra kartik2311/myntra:latest
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+          docker push kartik2311/myntra:latest
+        env:
+          DOCKER_CLI_ACI: 1
+      - name: Docker Scout Image Scan
+        run: |
+          /home/ubuntu/bind/docker-scout quickview kartik2311/myntra:latest
+          /home/ubuntu/bin/docker-scout cves kartik2311/myntra:latest
