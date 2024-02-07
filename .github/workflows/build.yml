@@ -44,3 +44,7 @@ jobs:
     steps:
        - name:  Run the container
          run: docker run -d --name myntra -p 3000:3000 kartik2311/myntra:latest
+       - name:  update kubeconfig
+         run:  aws eks update-kubeconfig --name MY_CLOUD --region eu-north-1
+       - name: run deployment
+         run: kubectl -f apply  deployment-service.yml
