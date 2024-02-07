@@ -35,7 +35,7 @@ jobs:
         env:
           DOCKER_CLI_ACI: 1
       - name: Docker Scout Image Scan
-        run: |
+        run: 
           /home/ubuntu/bin/docker-scout quickview kartik2311/myntra:latest
           /home/ubuntu/bin/docker-scout cves kartik2311/myntra:latest
   deploy:
